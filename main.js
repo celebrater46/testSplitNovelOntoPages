@@ -2,6 +2,7 @@
 
 const testLine = "男の名は、黒野｜堕天男《ルシファー》。";
 const maxLines = 20; // 何行で改ページするか
+const box = document.getElementById("box");
 
 // ｜堕天男《ルシファー》 -> <ruby><rb>堕天男</rb><rp>(</rp><rt>ルシファー</rt><rp>)</rp></ruby> 10+19+22+フリガナ
 const convertRuby = (line) => {
@@ -23,15 +24,28 @@ const createLinesArray = (line) => {
     return lines;
 }
 
-let lines = createLinesArray(testLine);
-// let remains = lines.length + maxLines;
-let i = 0;
-let pages = [];
-while(lines.length > maxLines){
-    pages.push(new Page(i, lines.splice(0, maxLines), false));
-    i++;
+// const createDiv = () => {
+//
+// }
+
+const test = (line) => {
+    let lines = createLinesArray(testLine);
+    let i = 0;
+    let pages = [];
+    while(lines.length > maxLines){
+        pages.push(new Page(i, lines.splice(0, maxLines), false));
+        i++;
+    }
+    if(lines.length > 0) {
+        pages.push(new Page(i, lines, true));
+    }
+    // return pages;
+    let el = "";
+    pages.map((page) => {
+        el += page.div;
+    });
+    box.innerHTML = el;
 }
-if(lines.length > 0) {
-    pages.push(new Page(i, lines, true));
-}
-console.log(pages);
+
+// console.log(test(testLine));
+test(testLine);
